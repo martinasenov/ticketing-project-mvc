@@ -13,6 +13,7 @@ public class UserServiceImpl extends AbstractMapService<UserDTO,String> implemen
 
     @Override
     public UserDTO save(UserDTO user) {
+
         return super.save(user.getUserName(), user);
     }
 
@@ -41,6 +42,13 @@ public class UserServiceImpl extends AbstractMapService<UserDTO,String> implemen
         return   findAll()
                 .stream()
                 .filter(user -> user.getRole().getId()==2)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<UserDTO> findEmployees() {
+        return findAll().stream()
+                .filter(user->user.getRole().getId()==3)
                 .collect(Collectors.toList());
     }
 }
