@@ -83,11 +83,14 @@ public class TaskController {
        when we pass {id} or whatever we name it to our url, it works just fine without using @Pathvariable
        annotation as long as the object (TaskDTO) field has the same variable name. In this case it's "Long id".
     */
-
         taskService.update(task);
 
         return "redirect:/task/create";
     }
+
+
+
+
 
 
 

@@ -9,6 +9,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/project")
 public class ProjectController {
@@ -76,6 +78,21 @@ public class ProjectController {
 
         projectService.update(project);
         return "redirect:/project/create";
+    }
+
+
+     @GetMapping("/manager/project-status")
+    public String getProjectByManager(Model model){
+        /* since we don't have security mechanism yet the code below has to be
+         hardcoded so that only manager can see the projects that are assigned to himself*/
+        UserDTO manager = userService.findById("john@cydeo.com");
+
+       List<ProjectDTO> projects=projectService.getCountedListOfProjectDTO(manager);
+
+        model.addAttribute("projects",projects);
+
+
+        return "/manager/project-status";
     }
 
 }
