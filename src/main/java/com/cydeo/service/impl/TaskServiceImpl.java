@@ -7,6 +7,7 @@ import com.cydeo.enums.Status;
 import com.cydeo.service.CrudService;
 import com.cydeo.service.ProjectService;
 import com.cydeo.service.TaskService;
+import org.springframework.scheduling.config.Task;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
@@ -51,11 +52,12 @@ public class TaskServiceImpl extends AbstractMapService<TaskDTO,Long> implements
 
     @Override
     public void update(TaskDTO task) {
-        if (task.getTaskStatus()==null)
-            task.setTaskStatus(Status.OPEN);
 
-        if (task.getAssignedDate()==null)
-            task.setAssignedDate(LocalDate.now());
+          TaskDTO foundTask=findById(task.getId());
+
+          task.setTaskStatus(foundTask.getTaskStatus());
+          task.setAssignedDate(foundTask.getAssignedDate());
+
 
         if (task.getId()==null)
             task.setId(UUID.randomUUID().getMostSignificantBits());
@@ -68,5 +70,26 @@ public class TaskServiceImpl extends AbstractMapService<TaskDTO,Long> implements
         return findAll().stream()
                 .filter(task->task.getProject().getAssignedManager().equals(manager))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<TaskDTO> findAllTasksByStatusIsNot(Status status) {
+        return findAll().stream()
+                .filter(task-> !task.getTaskStatus().equals(status))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<TaskDTO> findAllTasksByStatus(Status status) {
+        return findAll().stream()
+                .filter(task-> task.getTaskStatus().equals(status))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public void updateStatus(TaskDTO taskDto) {
+        TaskDTO task = findById(taskDto.getId()); // Retrieve the actual task entity
+        task.setTaskStatus(taskDto.getTaskStatus()); // Update the status
+        update(task); // Persist changes
     }
 }
