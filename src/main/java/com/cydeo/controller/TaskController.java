@@ -2,21 +2,15 @@ package com.cydeo.controller;
 
 import com.cydeo.dto.TaskDTO;
 import com.cydeo.enums.Status;
-import com.cydeo.service.ProjectService;
-import com.cydeo.service.TaskService;
-import com.cydeo.service.UserService;
-import org.springframework.boot.Banner;
-import org.springframework.scheduling.config.Task;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.UUID;
 
 @Controller
 @RequestMapping("/task")
 public class TaskController {
 
+/*
     private final ProjectService projectService;
     private final UserService userService;
     private final TaskService taskService;
@@ -69,22 +63,26 @@ public class TaskController {
 
 
 
- /*  @PostMapping("/update/{taskId}")
+ */
+/*  @PostMapping("/update/{taskId}")
    public String updateTask(@PathVariable("taskId") Long taskId, TaskDTO task) {
 
        task.setId(taskId);
        taskService.update(task);
 
        return "redirect:/task/create";
-   }*/
+   }*//*
+
 
     @PostMapping("/update/{id}")
     public String updateTask(TaskDTO task){
 
-    /*
+    */
+/*
        when we pass {id} or whatever we name it to our url, it works just fine without using @Pathvariable
        annotation as long as the object (TaskDTO) field has the same variable name. In this case it's "Long id".
-    */
+    *//*
+
         taskService.update(task);
 
         return "redirect:/task/create";
@@ -111,8 +109,10 @@ public class TaskController {
    @GetMapping("/employee/edit/{id}")
     public String employeeEditTask(@PathVariable Long id,Model model){
         model.addAttribute("task",taskService.findById(id));
-      /*  model.addAttribute("projects",projectService.findAll());
-        model.addAttribute("employees",userService.findEmployees());*/
+      */
+/*  model.addAttribute("projects",projectService.findAll());
+        model.addAttribute("employees",userService.findEmployees());*//*
+
         model.addAttribute("statuses",Status.values());
         model.addAttribute("tasks",taskService.findAllTasksByStatusIsNot(Status.COMPLETE));
 
@@ -128,6 +128,7 @@ public class TaskController {
 
         return "redirect:/task/employee/pending-tasks";
  }
+*/
 
 
 

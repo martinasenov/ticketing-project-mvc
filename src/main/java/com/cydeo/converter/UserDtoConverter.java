@@ -2,14 +2,12 @@ package com.cydeo.converter;
 
 import com.cydeo.dto.UserDTO;
 import com.cydeo.service.UserService;
-import com.fasterxml.jackson.databind.JavaType;
-import com.fasterxml.jackson.databind.type.TypeFactory;
-import org.springframework.boot.context.properties.ConfigurationPropertiesBinding;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
 @Component
 public class UserDtoConverter  implements Converter<String, UserDTO> {
+
 
     UserService userService;
 
@@ -18,13 +16,13 @@ public class UserDtoConverter  implements Converter<String, UserDTO> {
     }
 
     @Override
-    public UserDTO convert(String source) {
+    public UserDTO convert(String username) {
 
-        if (source == null || source.equals("")) {
+        if (username == null || username.equals("")) {
             return null;
         }
 
-        return userService.findById(source);
+        return userService.findByUserName(username);
 
     }
 

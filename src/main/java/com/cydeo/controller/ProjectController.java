@@ -2,9 +2,6 @@ package com.cydeo.controller;
 
 import com.cydeo.dto.ProjectDTO;
 import com.cydeo.dto.UserDTO;
-import com.cydeo.enums.Status;
-import com.cydeo.service.ProjectService;
-import com.cydeo.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +12,7 @@ import java.util.List;
 @RequestMapping("/project")
 public class ProjectController {
 
-    private final UserService userService;
+/*    private final UserService userService;
     private final ProjectService projectService;
 
     public ProjectController(UserService userService, ProjectService projectService) {
@@ -83,8 +80,8 @@ public class ProjectController {
 
      @GetMapping("/manager/project-status")
     public String getProjectByManager(Model model){
-        /* since we don't have security mechanism yet the code below has to be
-         hardcoded so that only manager can see the projects that are assigned to himself*/
+        *//* since we don't have security mechanism yet the code below has to be
+         hardcoded so that only manager can see the projects that are assigned to himself*//*
         UserDTO manager = userService.findById("john@cydeo.com");
 
        List<ProjectDTO> projects=projectService.getCountedListOfProjectDTO(manager);
@@ -93,6 +90,6 @@ public class ProjectController {
 
 
         return "/manager/project-status";
-    }
+    }*/
 
 }

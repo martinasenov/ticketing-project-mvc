@@ -26,20 +26,20 @@ public class UserController {
     public String createUser(Model model){
 
         model.addAttribute("user", new UserDTO());
-        model.addAttribute("roles", roleService.findAll());
-        model.addAttribute("users", userService.findAll());
+        model.addAttribute("roles", roleService.listAllRoles());
+        model.addAttribute("users", userService.listAllUsers());
 
         return "/user/create";
 
     }
-
+/*
     @PostMapping("/create")
     public String insertUser(@Valid @ModelAttribute("user") UserDTO user, BindingResult bindingResult, Model model) {
 
         if (bindingResult.hasErrors()) {
 
-            model.addAttribute("roles", roleService.findAll());
-            model.addAttribute("users", userService.findAll());
+            model.addAttribute("roles", roleService.listAllRoles());
+            model.addAttribute("users", userService.listAllUsers());
 
             return "/user/create";
 
@@ -84,6 +84,6 @@ public class UserController {
     public String deleteUser(@PathVariable("username") String username) {
         userService.deleteById(username);
         return "redirect:/user/create";
-    }
+    }*/
 
 }
