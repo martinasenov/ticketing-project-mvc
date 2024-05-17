@@ -20,6 +20,8 @@ public class BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private Boolean isDeleted = false;
+
     private LocalDateTime insertDateTime;
     private Long insertUserId;
     private LocalDateTime lastUpdateTime;
