@@ -2,17 +2,21 @@ package com.cydeo.controller;
 
 import com.cydeo.dto.ProjectDTO;
 import com.cydeo.dto.UserDTO;
+import com.cydeo.service.ProjectService;
+import com.cydeo.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
 @RequestMapping("/project")
 public class ProjectController {
 
-/*    private final UserService userService;
+    private final UserService userService;
     private final ProjectService projectService;
 
     public ProjectController(UserService userService, ProjectService projectService) {
@@ -25,15 +29,24 @@ public class ProjectController {
 
         model.addAttribute("project",new ProjectDTO());
 
-        model.addAttribute("managers",userService.findManagers());
+        model.addAttribute("managers",userService.listAllByRole("manager"));
 
-        model.addAttribute("projects",projectService.findAll());
+        model.addAttribute("projects",projectService.listAllProjects());
 
         return "/project/create";
     }
 
     @PostMapping("/create")
-    public String insertProject(@ModelAttribute("project") ProjectDTO project){
+    public String insertProject(@Valid @ModelAttribute("project") ProjectDTO project, BindingResult bindingResult,Model model){
+
+        if (bindingResult.hasErrors()){
+
+            model.addAttribute("managers",userService.listAllByRole("manager"));
+            model.addAttribute("projects",projectService.listAllProjects());
+
+
+            return "project/create";
+        }
 
         projectService.save(project);
 
@@ -43,7 +56,7 @@ public class ProjectController {
     @GetMapping("/delete/{projectCode}")
     public String deleteProject(@PathVariable("projectCode") String projectCode){
 
-        projectService.deleteById(projectCode);
+        projectService.delete(projectCode);
 
         return "redirect:/project/create";
 
@@ -52,7 +65,7 @@ public class ProjectController {
     @GetMapping("complete/{projectCode}")
     public String completeProject(@PathVariable("projectCode") String projectCode){
 
-        projectService.complete(projectService.findById(projectCode));
+        projectService.complete(projectCode);
 
 
         return "redirect:/project/create";
@@ -61,9 +74,9 @@ public class ProjectController {
     @GetMapping("/update/{projectCode}")
     public String editProject(@PathVariable("projectCode") String projectCode, Model model){
 
-        model.addAttribute("project",projectService.findById(projectCode));
-        model.addAttribute("managers", userService.findManagers());
-        model.addAttribute("projects",projectService.findAll());
+        model.addAttribute("project",projectService.getByProjectCode(projectCode));
+        model.addAttribute("managers", userService.listAllByRole("manager"));
+        model.addAttribute("projects",projectService.listAllProjects());
 
 
         return "/project/update";
@@ -71,17 +84,23 @@ public class ProjectController {
 
 
     @PostMapping("/update")
-    public String updateProject(@ModelAttribute("project") ProjectDTO project){
+    public String updateProject(@ModelAttribute("project") ProjectDTO project,BindingResult bindingResult,Model model){
 
+        if ((bindingResult.hasErrors())){
+
+            model.addAttribute("managers",userService.listAllByRole("manager"));
+            model.addAttribute("projects",projectService.listAllProjects());
+            return "/project/create";
+        }
         projectService.update(project);
         return "redirect:/project/create";
     }
 
-
+/*
      @GetMapping("/manager/project-status")
     public String getProjectByManager(Model model){
-        *//* since we don't have security mechanism yet the code below has to be
-         hardcoded so that only manager can see the projects that are assigned to himself*//*
+         since we don't have security mechanism yet the code below has to be
+         hardcoded so that only manager can see the projects that are assigned to himself
         UserDTO manager = userService.findById("john@cydeo.com");
 
        List<ProjectDTO> projects=projectService.getCountedListOfProjectDTO(manager);

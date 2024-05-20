@@ -23,6 +23,7 @@ public class UserServiceImpl implements UserService {
         this.userMapper = userMapper;
     }
 
+
     @Override
     public List<UserDTO> listAllUsers() {
 
@@ -70,6 +71,15 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findByUserName(username);
         user.setIsDeleted(true);
         userRepository.save(user);
+
+    }
+
+    @Override
+    public List<UserDTO> listAllByRole(String role) {
+
+        List<User> users=userRepository.findByRoleDescriptionIgnoreCase(role);
+        return users.stream().map(userMapper::convertToDTO).collect(Collectors.toList());
+
 
     }
 
