@@ -96,19 +96,15 @@ public class ProjectController {
         return "redirect:/project/create";
     }
 
-/*
      @GetMapping("/manager/project-status")
     public String getProjectByManager(Model model){
-         since we don't have security mechanism yet the code below has to be
-         hardcoded so that only manager can see the projects that are assigned to himself
-        UserDTO manager = userService.findById("john@cydeo.com");
 
-       List<ProjectDTO> projects=projectService.getCountedListOfProjectDTO(manager);
+       List<ProjectDTO> projects=projectService.listAllProjectDetails();
 
         model.addAttribute("projects",projects);
 
 
         return "/manager/project-status";
-    }*/
+    }
 
 }

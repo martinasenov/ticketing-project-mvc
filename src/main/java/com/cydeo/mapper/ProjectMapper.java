@@ -22,9 +22,9 @@ public class ProjectMapper {
         return modelMapper.map(dto,Project.class);
     }
 
-    public ProjectDTO convertToDTO(Project user){
+    public ProjectDTO convertToDTO(Project project){
 
-        return modelMapper.map(user, ProjectDTO.class);
+        return modelMapper.map(project, ProjectDTO.class);
     }
 
 }
